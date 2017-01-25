@@ -137,7 +137,7 @@ function getFormFieldFormat($line, $required, $value)
         $inputType = "";
     }
     if (strIsExist("enum", $line->type)) {
-        $data = "<div class='form-group'><label>" . $line->form->add . " " . requiedFieldForm($required) . "</label><select class='form-control' " . $required . " ><option />";
+        $data = "<div class='form-group'><label>" . $line->form->add . " " . requiedFieldForm($required) . "</label><select class='form-control' name='". $line['name'] ."' " . $required . " ><option />";
         $content = explode('-', str_replace(array('(', ')'), '-', $line->type));
         $enum = explode(',', str_replace("'", "", $content[1]));
         foreach ($enum as $v) {
@@ -165,7 +165,7 @@ function getFormFieldFormat($line, $required, $value)
  */
 function getIndexForm($db, $line, $required, $value)
 {
-    $index = "<div class='form-group'><label>" . $line->form->add . " " . requiedFieldForm($required) . "</label><select class='form-control' " . $required . " ><option />";
+    $index = "<div class='form-group'><label>" . $line->form->add . " " . requiedFieldForm($required) . "</label><select name='". $line['name'] ."' class='form-control' " . $required . " ><option />";
     $sql = "select " . $line->index['key'] . ", " . $line->index . " from " . $line->index['table'];
     $data = execQueryWithResult($db, $sql);
     if (!empty($data)) {
@@ -246,7 +246,10 @@ function setDataTabel($db, $table, $action, $data, $id = 0)
         $f = explode(',', substr(trim($fields), 0, -1));
         $v = explode(',', substr(trim($values), 0, -1));
         for ($i = 0; $i < count($f); $i++) {
-            $sql .= $f[$i] . " = " . $v[$i] . " ";
+            $sql .= $f[$i] . " = " . $v[$i] . ", ";
+        }
+        if(0 != $i){
+            $sql = substr(trim($sql), 0, -1)." ";
         }
         $key = getIdColumn($table);
         $sql .= "where " . $key['name'] . " = " . getValueByType($key['type'], $id);
