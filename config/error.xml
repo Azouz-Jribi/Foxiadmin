@@ -1,0 +1,8 @@
+<errors>
+    <error id="405" type="warning" >Method Not Allowed</error>
+    <error id="400" type="error" >Bad Request</error>
+    <error id="201" type="success" >Created successfully</error>
+    <error id="202" type="success" >Updated successfully</error>
+    <error id="203" type="success" >Deleted successfully</error>
+    <error id="102" type="info" >Processing</error>
+</errors>
